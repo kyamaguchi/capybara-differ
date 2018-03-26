@@ -24,6 +24,12 @@ module Capybara
       def beautified_html(file)
         raise ArgumentError, "#{file} not found" unless File.exist?(file)
         doc = Nokogiri.HTML(File.read(file))
+
+        # Add line breaks to get diff by elements
+        doc.traverse do |x|
+          x.content = "\n#{x.content.strip}\n" if x.text?
+        end
+
         html = target_selector ? doc.css(target_selector).to_html : doc.to_html
         HtmlBeautifier.beautify(html)
       end
