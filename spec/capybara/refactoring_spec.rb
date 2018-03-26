@@ -15,16 +15,18 @@ RSpec.describe Capybara::Refactoring do
 
     it "outputs line diff" do
       differ = Capybara::Refactoring::Differ.new(fixture_file_path('test1a'), fixture_file_path('test1b'))
-      expect(differ.compare).to match(%r{\-\s+ABC})
-      expect(differ.compare).to match(%r{\+\s+DEF})
+      result = differ.compare
+      expect(result).to match(%r{\-\s+ABC})
+      expect(result).to match(%r{\+\s+DEF})
     end
 
     it "outputs line diff with scoping with selector" do
       differ = Capybara::Refactoring::Differ.new(fixture_file_path('test2a'), fixture_file_path('test2b'), selector: '.target')
-      expect(differ.compare).to match(%r{\-\s+abc})
-      expect(differ.compare).to match(%r{\+\s+def})
-      expect(differ.compare).not_to match(%r{\-\s+ABC})
-      expect(differ.compare).not_to match(%r{\+\s+DEF})
+      result = differ.compare
+      expect(result).to match(%r{\-\s+abc})
+      expect(result).to match(%r{\+\s+def})
+      expect(result).not_to match(%r{\-\s+ABC})
+      expect(result).not_to match(%r{\+\s+DEF})
     end
 
     it "outputs blank line with equivalent files" do
@@ -34,10 +36,11 @@ RSpec.describe Capybara::Refactoring do
 
     it "outputs line diff with adding line breaks to each element for one line content" do
       differ = Capybara::Refactoring::Differ.new(fixture_file_path('test2a_oneline'), fixture_file_path('test2b_oneline'), selector: '.target')
-      expect(differ.compare).to match(%r{\-\s+abc})
-      expect(differ.compare).to match(%r{\+\s+def})
-      expect(differ.compare).not_to match(%r{\-\s+ABC})
-      expect(differ.compare).not_to match(%r{\+\s+DEF})
+      result = differ.compare
+      expect(result).to match(%r{\-\s+abc})
+      expect(result).to match(%r{\+\s+def})
+      expect(result).not_to match(%r{\-\s+ABC})
+      expect(result).not_to match(%r{\+\s+DEF})
     end
 
     it "raises error when the given file doesn't exist" do
