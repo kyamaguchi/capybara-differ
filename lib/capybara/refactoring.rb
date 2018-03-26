@@ -8,9 +8,10 @@ module Capybara
   module Refactoring
 
     class Differ
-      def initialize(old_file_path, new_file_path)
+      def initialize(old_file_path, new_file_path, options = {})
         @old_file_path = old_file_path
         @new_file_path = new_file_path
+        @options = options
       end
 
       def compare
@@ -23,7 +24,14 @@ module Capybara
       def beautified_html(file)
         raise ArgumentError, "#{file} not found" unless File.exist?(file)
         doc = Nokogiri.HTML(File.read(file))
-        HtmlBeautifier.beautify(doc.to_html)
+        html = target_selector ? doc.css(target_selector).to_html : doc.to_html
+        HtmlBeautifier.beautify(html)
+      end
+
+      private
+
+      def target_selector
+        @options.fetch(:selector, nil)
       end
     end
   end
