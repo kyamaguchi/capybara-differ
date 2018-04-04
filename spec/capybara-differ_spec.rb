@@ -65,9 +65,9 @@ RSpec.describe Capybara::Differ do
       end
 
       it "accepts the include_diff_info option of diffy" do
-        comparator = Capybara::Differ::Comparator.new(fixture_file_path('test_context_a'), fixture_file_path('test_context_b'), diffy: {include_diff_info: true})
+        comparator = Capybara::Differ::Comparator.new(fixture_file_path('test_context_a'), fixture_file_path('test_context_b'), diffy: {include_diff_info: false})
         result = comparator.compare
-        expect(result).to include('@@')
+        expect(result).not_to include('@@')
         expect(result).to match(%r{\-\s+ABC})
         expect(result).not_to include('line1')
       end

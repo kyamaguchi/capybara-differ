@@ -46,7 +46,7 @@ module Capybara
       end
 
       def diffy_options
-        {context: 2}.merge(@options.fetch(:diffy, {}))
+        {context: 2, include_diff_info: true}.merge(@options.fetch(:diffy, {}))
       end
     end
 
