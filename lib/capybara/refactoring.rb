@@ -19,6 +19,7 @@ module Capybara
           puts "There is no history of snapshots"
           return true
         end
+        puts "Comparing two files\n  #{@old_file_path}\n  #{@new_file_path}"
         old_html = beautified_html(@old_file_path)
         new_html = beautified_html(@new_file_path)
         Diffy::Diff.new(old_html, new_html, context: 2).to_s(:color)
