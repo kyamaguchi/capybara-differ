@@ -17,7 +17,7 @@ module Capybara
       def compare
         if @old_file_path == @new_file_path
           puts "There is no history of snapshots"
-          return true
+          return ''
         end
         puts "Comparing two files\n  #{@old_file_path}\n  #{@new_file_path}"
         old_html = beautified_html(@old_file_path)
@@ -54,7 +54,11 @@ module Capybara
       new_html_path = Dir[File.join(base_dir, '*')].last
 
       differ = Capybara::Refactoring::Differ.new(old_html_path, new_html_path, options)
-      puts differ.compare
+      if (result = differ.compare).strip.size > 0
+        puts result
+      else
+        puts "No difference on '#{name}' snapshots"
+      end
     end
   end
 end
