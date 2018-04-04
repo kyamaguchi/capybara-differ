@@ -1,8 +1,7 @@
 # Capybara::Refactoring
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/capybara/refactoring`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Print the diff of snapshots with Capybara.
+This will help refactoring of views.
 
 ## Installation
 
@@ -22,7 +21,35 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+In your system test(feature spec)
+
+```
+page.check_page('name_of_snapshot', selector: 'table')
+```
+
+You can get the diff from the history of `Capybara:Session#save_page`.
+
+In this example(when you add class to table header),  
+you will see the diff of latest snapshot and the first snapshot in _tmp/capybara/name_of_snapshot/_ .
+
+```
+       <th class="id">
+         ID
+       </th>
+-      <th class="name">
++      <th class="name foo">
+         Name
+       </th>
+```
+
+You can reset the target snapshot by removing files in _tmp/capybara/name_of_snapshot/_ .  
+Or remove the directory of snapshots.
+
+## TODO
+
+- Add an option to compare with the previous snapshot
+- Add an option to suppress log
+- Others
 
 ## Development
 
@@ -32,7 +59,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/capybara-refactoring.
+Bug reports and pull requests are welcome on GitHub at https://github.com/kyamaguchi/capybara-refactoring.
 
 ## License
 
