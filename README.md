@@ -45,6 +45,17 @@ you will see the diff of latest snapshot and the first snapshot in _tmp/capybara
 You can reset the target snapshot by removing files in _tmp/capybara/name_of_snapshot/_ .  
 Or remove the directory of snapshots.
 
+### Options
+
+#### Diffy
+
+This library depends on [diffy](https://github.com/samg/diffy)
+You can pass the options for diffy something like 'context'.
+
+```
+page.check_page('name_of_snapshot', selector: 'table', diffy: {context: 3})
+```
+
 ## TODO
 
 - Add an option to compare with the previous snapshot

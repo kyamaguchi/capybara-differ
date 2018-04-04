@@ -22,7 +22,7 @@ module Capybara
         puts "Comparing two files#{target_selector ? ' with selector [' + target_selector + ']' : ''}\n  #{@old_file_path}\n  #{@new_file_path}"
         old_html = beautified_html(@old_file_path)
         new_html = beautified_html(@new_file_path)
-        Diffy::Diff.new(old_html, new_html, context: 2).to_s(:color)
+        Diffy::Diff.new(old_html, new_html, context: diffy_options.fetch(:context, 2)).to_s(:color)
       end
 
       def beautified_html(file)
@@ -42,6 +42,10 @@ module Capybara
 
       def target_selector
         @options.fetch(:selector, nil)
+      end
+
+      def diffy_options
+        @options.fetch(:diffy, {})
       end
     end
 
