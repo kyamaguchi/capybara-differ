@@ -7,5 +7,10 @@
 /spec/reports/
 /tmp/
 
+/spec/tmp/
+
 # rspec failure tracking
 .rspec_status
+
+Gemfile.lock
+.byebug_history
