@@ -40,6 +40,18 @@ module Capybara
         @options.fetch(:selector, nil)
       end
     end
+
+    def check_page(name, options = {})
+      filename = File.join(name, Time.now.strftime('%Y%m%d%H%M%S') + '.html')
+      save_page(filename)
+
+      base_dir = File.join([Capybara.save_path, name].compact)
+      old_html_path = Dir[File.join(base_dir, '*')].first
+      new_html_path = Dir[File.join(base_dir, '*')].last
+
+      differ = Capybara::Refactoring::Differ.new(old_html_path, new_html_path, options)
+      puts differ.compare
+    end
   end
 end
 
