@@ -1,4 +1,4 @@
-# Capybara::Refactoring
+# Capybara::Differ
 
 Print the diff of snapshots with Capybara.
 This will help refactoring of views.
@@ -8,7 +8,7 @@ This will help refactoring of views.
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'capybara-refactoring'
+gem 'capybara-differ'
 ```
 
 And then execute:
@@ -17,7 +17,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install capybara-refactoring
+    $ gem install capybara-differ
 
 ## Usage
 
@@ -59,7 +59,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/kyamaguchi/capybara-refactoring.
+Bug reports and pull requests are welcome on GitHub at https://github.com/kyamaguchi/capybara-differ.
 
 ## License
 

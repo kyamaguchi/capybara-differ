@@ -1,6 +1,6 @@
-RSpec.describe Capybara::Refactoring do
+RSpec.describe Capybara::Differ do
   it "has a version number" do
-    expect(Capybara::Refactoring::VERSION).not_to be nil
+    expect(Capybara::Differ::VERSION).not_to be nil
   end
 
   describe 'Differ' do
@@ -9,20 +9,20 @@ RSpec.describe Capybara::Refactoring do
     end
 
     it "returns true when given paths are the same" do
-      differ = Capybara::Refactoring::Differ.new('same_path.html', 'same_path.html')
-      expect(differ.compare).to be_truthy
+      comparator = Capybara::Differ::Comparator.new('same_path.html', 'same_path.html')
+      expect(comparator.compare).to be_truthy
     end
 
     it "outputs line diff" do
-      differ = Capybara::Refactoring::Differ.new(fixture_file_path('test1a'), fixture_file_path('test1b'))
-      result = differ.compare
+      comparator = Capybara::Differ::Comparator.new(fixture_file_path('test1a'), fixture_file_path('test1b'))
+      result = comparator.compare
       expect(result).to match(%r{\-\s+ABC})
       expect(result).to match(%r{\+\s+DEF})
     end
 
     it "outputs line diff with scoping with selector" do
-      differ = Capybara::Refactoring::Differ.new(fixture_file_path('test2a'), fixture_file_path('test2b'), selector: '.target')
-      result = differ.compare
+      comparator = Capybara::Differ::Comparator.new(fixture_file_path('test2a'), fixture_file_path('test2b'), selector: '.target')
+      result = comparator.compare
       expect(result).to match(%r{\-\s+abc})
       expect(result).to match(%r{\+\s+def})
       expect(result).not_to match(%r{\-\s+ABC})
@@ -30,13 +30,13 @@ RSpec.describe Capybara::Refactoring do
     end
 
     it "outputs blank line with equivalent files" do
-      differ = Capybara::Refactoring::Differ.new(fixture_file_path('test2a'), fixture_file_path('test2a_copy'), selector: '.target')
-      expect(differ.compare).to eql("\n")
+      comparator = Capybara::Differ::Comparator.new(fixture_file_path('test2a'), fixture_file_path('test2a_copy'), selector: '.target')
+      expect(comparator.compare).to eql("\n")
     end
 
     it "outputs line diff with adding line breaks to each element for one line content" do
-      differ = Capybara::Refactoring::Differ.new(fixture_file_path('test2a_oneline'), fixture_file_path('test2b_oneline'), selector: '.target')
-      result = differ.compare
+      comparator = Capybara::Differ::Comparator.new(fixture_file_path('test2a_oneline'), fixture_file_path('test2b_oneline'), selector: '.target')
+      result = comparator.compare
       expect(result).to match(%r{\-\s+abc})
       expect(result).to match(%r{\+\s+def})
       expect(result).not_to match(%r{\-\s+ABC})
@@ -44,9 +44,9 @@ RSpec.describe Capybara::Refactoring do
     end
 
     it "raises error when the given file doesn't exist" do
-      differ = Capybara::Refactoring::Differ.new(fixture_file_path('test1a'), fixture_file_path('unknown'))
+      comparator = Capybara::Differ::Comparator.new(fixture_file_path('test1a'), fixture_file_path('unknown'))
       expect{
-        differ.compare
+        comparator.compare
       }.to raise_error(ArgumentError)
     end
   end

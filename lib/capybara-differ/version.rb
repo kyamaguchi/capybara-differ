@@ -1,5 +1,5 @@
 module Capybara
-  module Refactoring
+  module Differ
     VERSION = "0.1.0"
   end
 end

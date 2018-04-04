@@ -1,16 +1,16 @@
 lib = File.expand_path("../lib", __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require "capybara/refactoring/version"
+require "capybara-differ/version"
 
 Gem::Specification.new do |spec|
-  spec.name          = "capybara-refactoring"
-  spec.version       = Capybara::Refactoring::VERSION
+  spec.name          = "capybara-differ"
+  spec.version       = Capybara::Differ::VERSION
   spec.authors       = ["Kazuho Yamaguchi"]
   spec.email         = ["kzh.yap@gmail.com"]
 
   spec.summary       = %q{Snapshot pages and display diff to help refactoring.}
   spec.description   = %q{Snapshot pages and display diff to help refactoring.}
-  spec.homepage      = "https://github.com/kyamaguchi/capybara-refactoring"
+  spec.homepage      = "https://github.com/kyamaguchi/capybara-differ"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0").reject do |f|

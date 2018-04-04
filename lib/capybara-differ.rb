@@ -2,12 +2,12 @@ require 'byebug'
 require 'htmlbeautifier'
 require 'diffy'
 require 'capybara'
-require "capybara/refactoring/version"
+require "capybara-differ/version"
 
 module Capybara
-  module Refactoring
+  module Differ
 
-    class Differ
+    class Comparator
       def initialize(old_file_path, new_file_path, options = {})
         @old_file_path = old_file_path
         @new_file_path = new_file_path
@@ -53,8 +53,8 @@ module Capybara
       old_html_path = Dir[File.join(base_dir, '*')].first
       new_html_path = Dir[File.join(base_dir, '*')].last
 
-      differ = Capybara::Refactoring::Differ.new(old_html_path, new_html_path, options)
-      if (result = differ.compare).strip.size > 0
+      comparator = Capybara::Differ::Comparator.new(old_html_path, new_html_path, options)
+      if (result = comparator.compare).strip.size > 0
         puts result
       else
         puts "No difference on '#{name}' snapshots"
@@ -63,4 +63,4 @@ module Capybara
   end
 end
 
-Capybara::Session.send(:include, Capybara::Refactoring)
+Capybara::Session.send(:include, Capybara::Differ)
