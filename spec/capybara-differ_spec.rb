@@ -63,6 +63,12 @@ RSpec.describe Capybara::Differ do
         expect(result).to match(%r{\-\s+ABC})
         expect(result).to include('line1')
       end
+
+      it "accepts format option to change output with diffy" do
+        comparator = Capybara::Differ::Comparator.new(fixture_file_path('test_context_a'), fixture_file_path('test_context_b'), diffy: {format: :html})
+        result = comparator.compare
+        expect(result).to include('class="del"')
+      end
     end
   end
 end

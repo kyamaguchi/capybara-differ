@@ -56,6 +56,12 @@ You can pass the options for diffy something like 'context'.
 page.check_page('name_of_snapshot', selector: 'table', diffy: {context: 3})
 ```
 
+And you can change the format of output with diffy with 'format' option. (default :color)
+
+```
+page.check_page('name_of_snapshot', selector: 'table', diffy: {format: :html_simple})
+```
+
 ## TODO
 
 - Add an option to compare with the previous snapshot
