@@ -1,5 +1,8 @@
 # Capybara::Differ
 
+[![Gem Version](https://badge.fury.io/rb/capybara-differ.svg)](https://badge.fury.io/rb/capybara-differ)
+[![Build Status](https://travis-ci.org/kyamaguchi/capybara-differ.svg?branch=master)](https://travis-ci.org/kyamaguchi/capybara-differ)
+
 Print the diff of snapshots with Capybara.
 This will help refactoring of views.
 
