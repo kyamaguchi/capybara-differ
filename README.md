@@ -50,6 +50,16 @@ Or remove the directory of snapshots.
 
 ### Options
 
+#### Compare with the previous version
+
+By default, the target snapshot is the first version.
+
+You can compare with the previous version with the following option
+
+```
+page.check_page('name_of_snapshot', compare_with: :previous, selector: 'table')
+```
+
 #### Diffy
 
 This library depends on [diffy](https://github.com/samg/diffy)
@@ -67,7 +77,6 @@ page.check_page('name_of_snapshot', selector: 'table', diffy: {format: :html_sim
 
 ## TODO
 
-- Add an option to compare with the previous snapshot
 - Add an option to suppress log
 - Others
 

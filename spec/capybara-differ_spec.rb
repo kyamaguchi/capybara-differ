@@ -57,6 +57,13 @@ RSpec.describe Capybara::Differ do
       }.to raise_error(/\.unknown/)
     end
 
+    it "doesn't raise error when nil is given" do
+      comparator = Capybara::Differ::Comparator.new(nil, fixture_file_path('test1b'))
+      expect{
+        comparator.compare
+      }.not_to raise_error
+    end
+
     context 'options' do
       it "accepts the context option of diffy" do
         comparator = Capybara::Differ::Comparator.new(fixture_file_path('test_context_a'), fixture_file_path('test_context_b'))

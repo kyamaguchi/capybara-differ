@@ -15,7 +15,7 @@ module Capybara
       end
 
       def compare
-        if @old_file_path == @new_file_path
+        if @old_file_path.nil? || @new_file_path.nil? || @old_file_path == @new_file_path
           puts "There is no history of snapshots"
           return ''
         end
@@ -65,8 +65,9 @@ module Capybara
       save_page(filename)
 
       base_dir = File.join([Capybara.save_path, name].compact)
-      old_html_path = Dir[File.join(base_dir, '*.html')].first
-      new_html_path = Dir[File.join(base_dir, '*.html')].last
+      file_list = Dir[File.join(base_dir, '*.html')]
+      old_html_path = options[:compare_with] == :previous ? file_list[-2] : file_list.first
+      new_html_path = file_list.last
 
       comparator = Capybara::Differ::Comparator.new(old_html_path, new_html_path, options)
       if (result = comparator.compare).strip.size > 0
