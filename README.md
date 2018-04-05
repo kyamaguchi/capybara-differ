@@ -3,8 +3,29 @@
 [![Gem Version](https://badge.fury.io/rb/capybara-differ.svg)](https://badge.fury.io/rb/capybara-differ)
 [![Build Status](https://travis-ci.org/kyamaguchi/capybara-differ.svg?branch=master)](https://travis-ci.org/kyamaguchi/capybara-differ)
 
-Print the diff of snapshots with Capybara.
+Print the diff of snapshots with Capybara.  
 This will help refactoring of views.
+
+## Idea
+
+The main feature of this library is  **diffing beautified htmls**.
+
+You cannot always get nice diffs with 'git diff' or 'diff' command.  
+But this library gives them.  
+This library try to remove the concerns on diff of whitespaces, linebreaks.
+
+Expected use cases are
+
+* Refactoring views of Rails app
+    * Migration of erb -> haml
+    * Integration with [datagrid](https://github.com/bogdan/datagrid)
+* Tracking sites
+    * visit -> save_page -> check_page
+
+### Dependencies
+
+* https://github.com/samg/diffy
+* https://github.com/threedaymonk/htmlbeautifier
 
 ## Installation
 
