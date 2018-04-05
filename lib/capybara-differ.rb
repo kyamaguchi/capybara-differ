@@ -36,7 +36,7 @@ module Capybara
           x.content = "\n#{x.content.strip}\n" if x.text?
         end
 
-        html = target_selector ? doc.css(target_selector).to_html : doc.to_html
+        html = doc.css(target_selector || default_selector).to_html
         beautified_html = HtmlBeautifier.beautify(html)
 
         beautified_html_path = file + '.beauty'
@@ -48,6 +48,10 @@ module Capybara
 
       def target_selector
         @options.fetch(:selector, nil)
+      end
+
+      def default_selector
+        'body > *'
       end
 
       def diffy_options
