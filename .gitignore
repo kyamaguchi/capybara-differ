@@ -14,3 +14,5 @@
 
 Gemfile.lock
 .byebug_history
+
+/spec/fixtures/files/*.html.beauty

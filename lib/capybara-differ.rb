@@ -19,10 +19,11 @@ module Capybara
           puts "There is no history of snapshots"
           return ''
         end
-        puts "Comparing two files#{target_selector ? ' with selector [' + target_selector + ']' : ''}\n  #{@old_file_path}\n  #{@new_file_path}"
-        old_html = beautified_html(@old_file_path)
-        new_html = beautified_html(@new_file_path)
-        diff = Diffy::Diff.new(old_html, new_html, diffy_options)
+        puts "Comparing two files" + (target_selector ? " with selector [#{target_selector}]" : '')
+        puts "  #{@old_file_path}\n  #{@new_file_path}" unless diffy_options[:include_diff_info]
+        old_beautified_html_path = beautified_html(@old_file_path)
+        new_beautified_html_path = beautified_html(@new_file_path)
+        diff = Diffy::Diff.new(old_beautified_html_path, new_beautified_html_path, diffy_options.merge(source: 'files'))
         diff.to_s(diffy_options.fetch(:format, :color))
       end
 
@@ -36,7 +37,11 @@ module Capybara
         end
 
         html = target_selector ? doc.css(target_selector).to_html : doc.to_html
-        HtmlBeautifier.beautify(html)
+        beautified_html = HtmlBeautifier.beautify(html)
+
+        beautified_html_path = file + '.beauty'
+        File.write(beautified_html_path, beautified_html)
+        beautified_html_path
       end
 
       private
@@ -55,8 +60,8 @@ module Capybara
       save_page(filename)
 
       base_dir = File.join([Capybara.save_path, name].compact)
-      old_html_path = Dir[File.join(base_dir, '*')].first
-      new_html_path = Dir[File.join(base_dir, '*')].last
+      old_html_path = Dir[File.join(base_dir, '*.html')].first
+      new_html_path = Dir[File.join(base_dir, '*.html')].last
 
       comparator = Capybara::Differ::Comparator.new(old_html_path, new_html_path, options)
       if (result = comparator.compare).strip.size > 0
