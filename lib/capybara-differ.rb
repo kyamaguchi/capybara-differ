@@ -36,8 +36,9 @@ module Capybara
           x.content = "\n#{x.content.strip}\n" if x.text?
         end
 
-        html = doc.css(target_selector || default_selector).to_html
-        beautified_html = HtmlBeautifier.beautify(html)
+        node = doc.css(target_selector || default_selector)
+        raise("Couldn't find the selector [#{target_selector}]") if node.empty?
+        beautified_html = HtmlBeautifier.beautify(node.to_html)
 
         beautified_html_path = file + '.beauty'
         File.write(beautified_html_path, beautified_html)

@@ -50,6 +50,13 @@ RSpec.describe Capybara::Differ do
       }.to raise_error(ArgumentError)
     end
 
+    it "raises error when the given selector wasn't found" do
+      comparator = Capybara::Differ::Comparator.new(fixture_file_path('test1a'), fixture_file_path('test1b'), selector: '.unknown')
+      expect{
+        comparator.compare
+      }.to raise_error(/\.unknown/)
+    end
+
     context 'options' do
       it "accepts the context option of diffy" do
         comparator = Capybara::Differ::Comparator.new(fixture_file_path('test_context_a'), fixture_file_path('test_context_b'))
