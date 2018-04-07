@@ -54,7 +54,7 @@ RSpec.describe Capybara::Differ do
       comparator = Capybara::Differ::Comparator.new(fixture_file_path('test1a'), fixture_file_path('test1b'), selector: '.unknown')
       expect{
         comparator.compare
-      }.to raise_error(/\.unknown/)
+      }.to raise_error(/\.unknown.*test1a/)
     end
 
     it "doesn't raise error when nil is given" do

@@ -37,7 +37,7 @@ module Capybara
         end
 
         node = doc.css(target_selector || default_selector)
-        raise("Couldn't find the selector [#{target_selector}]") if node.empty?
+        raise("Couldn't find the selector [#{target_selector}] in #{file}") if node.empty?
         beautified_html = HtmlBeautifier.beautify(node.to_html)
 
         beautified_html_path = file + '.beauty'
