@@ -61,10 +61,11 @@ module Capybara
     end
 
     def check_page(name, options = {})
-      filename = File.join(name, Time.now.strftime('%Y%m%d%H%M%S') + '.html')
+      path_from_name = name.gsub(/[^a-z0-9\-_]+/i, '_')
+      filename = File.join(path_from_name, Time.now.strftime('%Y%m%d%H%M%S') + '.html')
       save_page(filename)
 
-      base_dir = File.join([Capybara.save_path, name].compact)
+      base_dir = File.join([Capybara.save_path, path_from_name].compact)
       file_list = Dir[File.join(base_dir, '*.html')]
       old_html_path = options[:compare_with] == :previous ? file_list[-2] : file_list.first
       new_html_path = file_list.last
@@ -73,7 +74,7 @@ module Capybara
       if (result = comparator.compare).strip.size > 0
         puts result
       else
-        puts "No difference on '#{name}' snapshots"
+        puts "No difference on '#{path_from_name}' snapshots"
       end
     end
   end

@@ -21,10 +21,17 @@ RSpec.describe 'Capybara::Session' do
 
     it "outputs the message of no history when there is no history" do
       session = Capybara::Session.new(:rack_test)
-        session.check_page('no_history', compare_with: :previous, diffy: {format: :text})
+      session.check_page('no_history', compare_with: :previous, diffy: {format: :text})
       expect{
         session.check_page('no_history', compare_with: :previous, diffy: {format: :text})
       }.to output(%r{no history}).to_stdout
+    end
+
+    it "sanitizes path from invalid name" do
+      session = Capybara::Session.new(:rack_test)
+      expect{
+        session.check_page('../../../invalid', compare_with: :previous, diffy: {format: :text})
+      }.to output(%r{_invalid}).to_stdout
     end
   end
 end
