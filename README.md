@@ -22,6 +22,53 @@ Expected use cases are
 * Tracking sites
     * visit -> save_page -> check_page
 
+### An example of tracking site
+
+When you run the following commands periodically,
+
+```ruby
+Capybara.save_path = 'tmp/capybara'
+session = Capybara::Session.new(:selenium)
+session.visit 'http://rubyonrails.org/'
+session.check_page('rails_page')
+```
+
+you could get the following output.
+
+```diff
+Comparing two files
+--- tmp/capybara/rails_page/20180407095217.html.beauty  2018-04-11 17:04:28.000000000 +0900
++++ tmp/capybara/rails_page/20180411170428.html.beauty  2018-04-11 17:04:28.000000000 +0900
+@@ -21,5 +21,5 @@
+   <section>
+     <p class="mobile-center">
+-      <img src="/images/rails-logo.svg" width="220" height="78" alt="Ruby on Rails">
++      <img src="/images/rails-logo.svg" alt="Ruby on Rails" height="78" width="220">
+     </p>
+   </section>
+@@ -48,15 +48,15 @@
+   </section>
+   <section class="version">
+-    <p><a href="http://weblog.rubyonrails.org/2018/3/29/Rails-5-0-7-and-5-1-6-have-been-released/">
+-        Latest version — Rails 5.1.6
++    <p><a href="http://weblog.rubyonrails.org/2018/4/9/Rails-5-2-0-final/">
++        Latest version — Rails 5.2.0
+         <span class="hide-mobile">
+-          released March 29, 2018
++          released April 9, 2018
+         </span></a></p>
+     <p class="show-mobile"><small>
+-        Released March 29, 2018
++        Released April 9, 2018
+       </small></p>
+   </section>
+   <section class="video-container">
+-    <iframe src="https://www.youtube.com/embed/OaDhY_y8WTo" frameborder="0" allowfullscreen="" class="video"></iframe>
++    <iframe src="https://www.youtube.com/embed/OaDhY_y8WTo" allowfullscreen="" class="video" frameborder="0"></iframe>
+   </section>
+   <section class="interior">
+```
+
 ### Dependencies
 
 * https://github.com/samg/diffy
