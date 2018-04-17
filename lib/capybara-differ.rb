@@ -23,8 +23,15 @@ module Capybara
         puts "  #{@old_file_path}\n  #{@new_file_path}" unless diffy_options[:include_diff_info]
         old_beautified_html_path = beautified_html(@old_file_path)
         new_beautified_html_path = beautified_html(@new_file_path)
-        diff = Diffy::Diff.new(old_beautified_html_path, new_beautified_html_path, diffy_options.merge(source: 'files'))
-        diff.to_s(diffy_options.fetch(:format, :color))
+        # cmd = "git diff --no-index --color-words --word-diff-regex='\w+|[^[:space:]]' #{old_beautified_html_path} #{new_beautified_html_path}"
+        # cmd = "git diff --no-index --color-words --word-diff-regex=. #{old_beautified_html_path} #{new_beautified_html_path}"
+        # cmd = "git diff --no-index --color-words --word-diff #{old_beautified_html_path} #{new_beautified_html_path}"
+        # cmd = "git diff --no-index --color --word-diff #{old_beautified_html_path} #{new_beautified_html_path}"
+        cmd = "git diff --no-index --color-words --word-diff-regex='\w+|[^[:space:]=\"<>]+' #{old_beautified_html_path} #{new_beautified_html_path}"
+        # cmd = "git diff --no-index --color-words --word-diff-regex='\w+|[^[:space:]=\"<>]+' #{old_beautified_html_path} #{new_beautified_html_path}"
+        diff = Open3.popen3(cmd) { |i, o, e| o.read }
+        # diff = Diffy::Diff.new(old_beautified_html_path, new_beautified_html_path, diffy_options.merge(source: 'files'))
+        # diff.to_s(diffy_options.fetch(:format, :color))
       end
 
       def beautified_html(file)
