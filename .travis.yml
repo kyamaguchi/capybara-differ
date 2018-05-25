@@ -4,5 +4,5 @@ rvm:
   - 2.4.3
 before_install: gem install bundler -v 1.16.1
 script:
-  - bundle exec rspec --fail-fast --format documentation spec/capybara-differ/session_spec.rb:8
+  - bundle exec rspec --fail-fast --format documentation spec/capybara-differ/session_spec.rb:8 || \
   - bundle exec rspec --fail-fast --format documentation spec
