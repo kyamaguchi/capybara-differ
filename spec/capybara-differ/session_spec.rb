@@ -7,6 +7,7 @@ RSpec.describe 'Capybara::Session' do
   describe '#check_page' do
     it "compares with the original by default" do
       session = Capybara::Session.new(:rack_test)
+      expect(true).to be_falsey
       expect{
         session.check_page('session_test', diffy: {format: :text})
       }.to output(%r{\-  Revision1\n\+  Revision3}).to_stdout
