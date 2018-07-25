@@ -20,11 +20,16 @@ module Capybara
           return ''
         end
         puts "Comparing two files" + (target_selector ? " with selector [#{target_selector}]" : '')
-        puts "  #{@old_file_path}\n  #{@new_file_path}" unless diffy_options[:include_diff_info]
         old_beautified_html_path = beautified_html(@old_file_path)
         new_beautified_html_path = beautified_html(@new_file_path)
-        diff = Diffy::Diff.new(old_beautified_html_path, new_beautified_html_path, diffy_options.merge(source: 'files'))
-        diff.to_s(diffy_options.fetch(:format, :color))
+        if use_diffy?
+          puts "  #{@old_file_path}\n  #{@new_file_path}" unless diffy_options[:include_diff_info]
+          diff = Diffy::Diff.new(old_beautified_html_path, new_beautified_html_path, diffy_options.merge(source: 'files'))
+          diff.to_s(diffy_options.fetch(:format, :color))
+        else
+          cmd = "git diff --no-index --color-words --word-diff-regex='\w+|[^[:space:]=\"<>]+' #{old_beautified_html_path} #{new_beautified_html_path}"
+          diff = Open3.popen3(cmd) { |i, o, e| o.read }
+        end
       end
 
       def beautified_html(file)
@@ -56,7 +61,12 @@ module Capybara
       end
 
       def diffy_options
-        {context: 2, include_diff_info: true}.merge(@options.fetch(:diffy, {}))
+        opt = {context: 2, include_diff_info: true}
+        @options[:diffy].is_a?(Hash) ? opt.merge(@options[:diffy]) : opt
+      end
+
+      def use_diffy?
+        @options.has_key?(:diffy)
       end
     end
 

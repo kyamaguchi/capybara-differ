@@ -17,7 +17,7 @@ This library try to remove the concerns on diff of whitespaces, linebreaks.
 Expected use cases are
 
 * Refactoring views of Rails app
-    * Migration of erb -> haml
+    * Migration of erb -> haml/slim
     * Integration with [datagrid](https://github.com/bogdan/datagrid)
 * Tracking sites
     * visit -> save_page -> check_page
@@ -30,7 +30,7 @@ When you run the following commands periodically,
 Capybara.save_path = 'tmp/capybara'
 session = Capybara::Session.new(:selenium)
 session.visit 'http://rubyonrails.org/'
-session.check_page('rails_page')
+session.check_page('rails_page', diffy: true)
 ```
 
 you could get the following output.
@@ -69,8 +69,19 @@ Comparing two files
    <section class="interior">
 ```
 
+### git word diff
+
+This library can display diff using git diff (default)  
+Check the output without diffy option
+
+```ruby
+session.visit 'http://rubyonrails.org/'
+session.check_page('rails_page')
+```
+
 ### Dependencies
 
+* git
 * https://github.com/samg/diffy
 * https://github.com/threedaymonk/htmlbeautifier
 
