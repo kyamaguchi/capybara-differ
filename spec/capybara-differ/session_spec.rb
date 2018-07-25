@@ -5,6 +5,13 @@ RSpec.describe 'Capybara::Session' do
   end
 
   describe '#check_page' do
+    it "requires options as Hash" do
+      session = Capybara::Session.new(:rack_test)
+      expect{
+        session.check_page('session_test', 'not_hash')
+      }.to raise_error(ArgumentError)
+    end
+
     it "compares with the original by default" do
       session = Capybara::Session.new(:rack_test)
       expect{

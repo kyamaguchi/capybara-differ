@@ -61,6 +61,7 @@ module Capybara
     end
 
     def check_page(name, options = {})
+      raise ArgumentError, 'options must be hash' unless options.is_a?(Hash)
       path_from_name = name.gsub(/[^a-z0-9\-_]+/i, '_')
       filename = File.join(path_from_name, Time.now.strftime('%Y%m%d%H%M%S') + '.html')
       save_page(filename)
