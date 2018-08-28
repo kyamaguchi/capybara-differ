@@ -77,7 +77,7 @@ module Capybara
       save_page(filename)
 
       base_dir = File.join([Capybara.save_path, path_from_name].compact)
-      file_list = Dir[File.join(base_dir, '*.html')]
+      file_list = Dir[File.join(base_dir, '*.html')].sort
       old_html_path = options[:compare_with] == :previous ? file_list[-2] : file_list.first
       new_html_path = file_list.last
 
