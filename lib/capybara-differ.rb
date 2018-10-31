@@ -27,7 +27,8 @@ module Capybara
           diff = Diffy::Diff.new(old_beautified_html_path, new_beautified_html_path, diffy_options.merge(source: 'files'))
           diff.to_s(diffy_options.fetch(:format, :color))
         else
-          cmd = "git diff --no-index --color-words --word-diff-regex='\w+|[^[:space:]=\"<>]+' #{old_beautified_html_path} #{new_beautified_html_path}"
+          context = @options.fetch(:context, 3).to_i
+          cmd = "git diff --no-index --color-words --unified=#{context} --word-diff-regex='\w+|[^[:space:]=\"<>]+' #{old_beautified_html_path} #{new_beautified_html_path}"
           Open3.popen3(cmd) { |i, o, e| o.read }
         end
       end

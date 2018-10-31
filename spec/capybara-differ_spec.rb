@@ -21,6 +21,14 @@ RSpec.describe Capybara::Differ do
       expect(result).to include('32mDEF') # green color
     end
 
+    it "supports an option to change the number of lines for context" do
+      comparator = Capybara::Differ::Comparator.new(fixture_file_path('test1a'), fixture_file_path('test1b'), context: 0)
+      result = comparator.compare
+      expect(result).to include('31mABC') # red color
+      expect(result).to include('32mDEF') # green color
+      expect(result).not_to match('<div>')
+    end
+
     it "outputs line diff" do
       comparator = Capybara::Differ::Comparator.new(fixture_file_path('test1a'), fixture_file_path('test1b'), diffy: true)
       result = comparator.compare

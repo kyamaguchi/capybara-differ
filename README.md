@@ -79,6 +79,22 @@ session.visit 'http://rubyonrails.org/'
 session.check_page('rails_page')
 ```
 
+#### Change the number of lines of context
+
+Supports the option(`context`) to change the number of lines of context.
+It sets the value of `--unified=`(default 3) of git diff option.
+
+```
+session.check_page('test_page', context: 0)
+```
+
+It's possible to change the value from command line using env var
+if you have code something like the following.
+
+```
+session.check_page('test_page', context: ENV.fetch('CONTEXT', 3))
+```
+
 ### Dependencies
 
 * git
